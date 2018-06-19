@@ -100,51 +100,7 @@ print(question1("abc", "aaabbbccc"))
 
 Question 2
 
-string = "xnursesruns"
 
-
-def question2(s):
-  
-  str1 = s
-  word = ""
-  start = 1
-  before = start - 1
-  after = start + 1
-
-  if not str1 or type(str1) != str:
-    return False
-
-  if len(str1) < 2:
-    return False
-
-  if str1 == str1[::-1]:
-    return str1
-
-  for x in range(1, len(str1)-2):
-    if str1[before] != str1[after]:
-      start +=1
-      before += 1
-      after += 1
-      print(start)
-    elif str1[before] == str1[after]:
-      word = palindrome(str1, before, after)
-      start += 1
-      before += 1
-      after += 1
-      print(word)
-
-
-def palindrome(stng, bef, aft): 
-  print(bef, aft)
-  if stng[bef] != stng[aft]:
-    return stng[bef+1:aft]
-  elif bef == 0 or aft == len(stng)-1:
-    return stng[bef:aft+1]
-  else:
-    return palindrome(stng, bef-1, aft+1)
- 
-
-print(question2(string))
 
 Question 3
 
