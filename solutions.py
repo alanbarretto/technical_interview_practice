@@ -100,7 +100,76 @@ print(question1("abc", "aaabbbccc"))
 
 Question 2
 
+string = "dcknseshhhhnursesrunhhhrun..xxxxxx"
 
+
+def question2(s):
+  
+  str1 = s
+  word = ""
+  longest = ""
+  start = 1
+  before = start - 1
+  after = start + 1
+
+  if not str1 or type(str1) != str:
+    return False
+
+  if len(str1) < 2:
+    return False
+
+  if str1 == str1[::-1]:
+    return str1
+
+  if str1[len(str1)-2] == str1[len(str1)-1]:
+    longest = str1[len(str1)-2:len(str1)]
+
+  for x in range(1, len(str1)-2):
+
+    if str1[before] == str1[start]:
+      consec = consecutive(str1, before, start)
+      if len(consec) > len(longest):
+        longest = consec
+      start +=1
+      before += 1
+      after += 1
+
+
+    elif str1[before] != str1[after]:
+      start +=1
+      before += 1
+      after += 1
+      
+    elif str1[before] == str1[after]:
+      word = palindrome(str1, before, after)
+      start += 1
+      before += 1
+      after += 1
+      if len(word) > len(longest):
+        longest = word
+  return longest
+      
+
+
+def palindrome(stng, bef, aft): 
+  
+  if stng[bef] != stng[aft]:
+    return stng[bef+1:aft]
+  elif bef == 0 or aft == len(stng)-1:
+    return stng[bef:aft+1]
+  else:
+    return palindrome(stng, bef-1, aft+1)
+
+def consecutive(stng, b, st):
+  if st == len(stng)-1:
+    return stng[b:st+1]
+  elif stng[b] != stng[st+1]:
+    return stng[b:st+1]
+  else:
+    return consecutive(stng, b, st+1)
+ 
+
+print(question2(string))
 
 Question 3
 
