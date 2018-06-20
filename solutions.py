@@ -202,16 +202,17 @@ def question5(ll, m):
     if m == 1:
       return ll.head.value
 
-    
-
     counter = 1
-
     current = ll.head
     while current.next:
         current = current.next
         counter += 1
-    counter - m = extra
-    return counter - extra
+        if counter == m:
+          return current.value
+    if m > counter:
+        return None
+
+
 
 
 
