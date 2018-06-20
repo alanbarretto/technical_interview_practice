@@ -173,7 +173,10 @@ print(question2(string))
 
 Question 5
 
-
+def question5(n, i):
+  if not n:
+    return False
+    
 
 
 
