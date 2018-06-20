@@ -173,10 +173,27 @@ print(question2(string))
 
 Question 5
 
+class Node(object):
+    def __init__(self, value):
+        self.value = value
+        self.next = None
+
+class LinkedList(object):
+    def __init__(self, head=None):
+        self.head = head
+
+
+
 def question5(n, i):
-  if not n:
-    return False
-    
+    if not n:
+        return False
+
+    ll = LinkedList(n)
+
+
+
+
+
 
 
 
