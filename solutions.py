@@ -215,7 +215,16 @@ def question5(ll, m):
     elif m > counter:
        return None
 
-    
+    new_counter = 1
+    new_counter = ll.head
+    while new_current.next:
+      if new_counter == winner:
+          return new_current.value
+      else: 
+          new_current = new_current.next
+          new_counter +=1
+
+
 
 node1 = Node('A')
 ll = LinkedList(node1)
