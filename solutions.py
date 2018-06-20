@@ -212,7 +212,15 @@ def question5(ll, m):
     if m > counter:
         return None
 
+node1 = Node('A')
+ll = LinkedList(node1)
+ll.append(Node('B'))
+ll.append(Node('C'))
+ll.append(Node('D'))
+ll.append(Node('E'))
+ll.append(Node('F'))
 
+print(question5(ll, 4))
 
 
 
