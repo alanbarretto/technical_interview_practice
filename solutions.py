@@ -171,7 +171,10 @@ def consecutive(stng, b, st):
 
 print(question2(string))
 
-Question 3
+Question 5
+
+
+
 
 
 
