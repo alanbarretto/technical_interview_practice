@@ -207,10 +207,15 @@ def question5(ll, m):
     while current.next:
         current = current.next
         counter += 1
-        if counter == m:
-          return current.value
-    if m > counter:
-        return None
+       
+    temp = counter - m
+    winner = temp +1
+    if counter == winner:
+       return current.value
+    elif m > counter:
+       return None
+
+    
 
 node1 = Node('A')
 ll = LinkedList(node1)
