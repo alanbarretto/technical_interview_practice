@@ -199,6 +199,11 @@ def question5(ll, m):
     if not ll.head:
       return None
 
+    if m == 1:
+      return ll.head.value
+
+    
+
     counter = 1
 
     current = ll.head
