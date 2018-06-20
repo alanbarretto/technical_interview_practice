@@ -184,11 +184,25 @@ class LinkedList(object):
 
 
 
-def question5(n, i):
-    if not n:
+
+
+def question5(ll, m):
+    if not ll:
         return False
 
     ll = LinkedList(n)
+
+    if not ll.head:
+      return None
+
+    counter = 1
+
+    current = ll.head
+    while current.next:
+        current = current.next
+        counter += 1
+    counter - m = extra
+    return counter - extra
 
 
 
