@@ -180,6 +180,10 @@ def question3(g):
   graph = g
   vert_list = graph.keys()
   edges = set()
+  vert_set = []
+
+  for v in ver_list:
+    vert_set.append(set(v))
 
   for key, vertex in graph.items():
     for each in vertex:
