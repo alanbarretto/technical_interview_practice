@@ -173,8 +173,24 @@ print(question2(string))
 
 Question 3
 
+G = {'A': [('B', 7), ('D', 5)], 'B': [('A', 7), ('C', 8), ('D', 9), ('E', 7)],'C': [('B', 8), ('E', 5)],'D': [('A', 5), ('B', 9), ('E', 15), ('F', 6)],'E': [('B', 7), ('C', 5), ('D', 15), ('F', 8), ('G', 9)],'F': [('D', 6), ('E', 8), ('G', 11)],'G': [('E', 9), ('F', 11)]}
+
 def question3(g):
+
+  graph = g
+  vert_list = graph.keys()
+  edges = set()
+
+  for key, vertex in graph.items():
+    for each in vertex:
+      if key > each[0]:
+        edges.add((each[1], each[0], key))
+      else:
+        edges.add((each[1], key, each[0]))
   
+  sorted_e = sorted(edges)
+  for e in sorted_e:
+
 
 
 Question 5
