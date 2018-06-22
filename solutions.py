@@ -182,7 +182,7 @@ def question3(g):
   edges = set()
   vert_set = []
 
-  for v in ver_list:
+  for v in vert_list:
     vert_set.append(set(v))
 
   for key, vertex in graph.items():
