@@ -182,6 +182,12 @@ def question3(g):
   tree_set = []
   chosen_edges = []
   final_output = {}
+
+  if type(graph) != dict:
+    return "Input must be a dictionary"
+
+  if len(graph) < 2:
+    return "There are not enough nodes to form a tree"
   
   for x in graph:
     vert_set.append(set(x))
