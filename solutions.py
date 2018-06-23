@@ -196,7 +196,21 @@ def question3(g):
         edges.add((each[1], key, each[0]))
   
   sorted_e = sorted(edges)
-  for e in sorted_e:
+  for edge in sorted_e:
+    for i in range(len(vert_set)):
+      if edge[1] in vert_set[i]:
+        vert_1 = 1
+        edge_a = edge[1]
+      if edge[2] in vert_set[i]:
+        vert_2 = i
+        edge_b = edge[2]
+
+    if vert_1 != vert_2:
+      vert_set[vert_1] = vert_set[vert_1].union(vert_set[vert_2])
+      vert_set.pop(vert_2)
+      tree_set.append(edge)
+      print(vert_set)
+      
 
 
 
