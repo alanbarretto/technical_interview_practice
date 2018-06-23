@@ -176,53 +176,94 @@ Question 3
 
 def question3(g):
 
-  graph = g
-  vert_set = []
-  edges = set()
-  tree_set = []
-  chosen_edges = []
-  final_output = {}
+    graph = g
+    vert_set = []
+    edges = set()
+    tree_set = []
+    chosen_edges = []
+    final_output = {}
 
-  if type(graph) != dict:
-    return "Input must be a dictionary"
+    if type(graph) != dict:
+        return "Input must be a dictionary"
 
-  if len(graph) < 2:
-    return "There are not enough nodes to form a tree"
+    if len(graph) < 2:
+        return "There are not enough nodes to form a tree"
   
-  for x in graph:
-    vert_set.append(set(x))
+    for x in graph:
+        vert_set.append(set(x))
 
   
 
-  for key, vertex in graph.items():
-    for each in vertex:
-      if key > each[0]:
-        edges.add((each[1], each[0], key))
-      else:
-        edges.add((each[1], key, each[0]))
+    for key, vertex in graph.items():
+        for each in vertex:
+            if key > each[0]:
+                edges.add((each[1], each[0], key))
+        else:
+            edges.add((each[1], key, each[0]))
   
-  sorted_e = sorted(edges)
+    sorted_e = sorted(edges)
 
-  holding_cell = []
-  for edge in sorted_e:
-    edge1 = edge[1]
-    edge2 = edge[2]
+    holding_cell = []
+    for edge in sorted_e:
+        edge1 = edge[1]
+        edge2 = edge[2]
 
-    if tree_set == []:
-      tree_set.append({edge1, edge2})
-      chosen_edges.append(edge)
-    else: 
-      index1 = -1
-      index2 = -1
+        if tree_set == []:
+            tree_set.append({edge1, edge2})
+            chosen_edges.append(edge)
+        else: 
+            index1 = -1
+            index2 = -1
 
-      for index in range(len(tree_set)):
-        if edge1 in tree_set[index]:
-          index1 = index
+        for index in range(len(tree_set)):
+            if edge1 in tree_set[index]:
+                index1 = index
 
-        if edge2 in tree_set[index]:
-          index2 = index
+            if edge2 in tree_set[index]:
+                index2 = index
 
-      
+            if index1 == -1 and index2 == -1:
+                tree_set.append({edge1, edge2})
+                chosen_edges.append(edge)
+            elif (index1 == index2) and (index1 > 0 and index2 > 0):
+                index1 = -1
+                index2 = -1
+            elif index1 == -1 and index2 > 0:
+                holding_cell.append({edge1})
+                tree_set[index2] = tree_set[index2].union(tree_set[holding_cell[0]])
+                holding_cell.pop(0)
+                index2 = -1
+                chosen_edges.append(edge)
+
+            elif index2 == -1 and index1 >= 0:
+                holding_cell.append({edge2})
+                tree_set[index1] = tree_set
+                tree_set[index1] = tree_set[index1].union(holding_cell[0])
+                holding_cell.pop(0)
+                index1 = -1
+                chosen_edges.append(edge)
+        
+
+            elif (index1 != -1 and index2 != -1) and (index1 != index2):
+                tree_set[index1] = tree_set[index1].union(tree_set[index2])
+                tree_set.pop(index2)
+                index1 = -1
+                index2 = -1
+                chosen_edges.append(edge)
+        
+
+    for chosen in chosen_edges:
+        value = chosen[0]
+        key = chosen[1]
+        connects_to = chosen[2]
+        if key in final_output:
+            final_output[key].append((value, connects_to))
+        else: 
+            final_output[key] = [(value, connects_to)]
+
+    return final_output
+
+
 
 
 
