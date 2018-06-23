@@ -202,6 +202,8 @@ def question3(g):
         edges.add((each[1], key, each[0]))
   
   sorted_e = sorted(edges)
+
+  holding_cell = []
   for edge in sorted_e:
     for i in range(len(vert_set)):
       
