@@ -205,20 +205,19 @@ def question3(g):
 
   holding_cell = []
   for edge in sorted_e:
-    for i in range(len(vert_set)):
-      
-      if edge[1] in vert_set[i]:
-        vert_1 = i
-        edge_a = edge[1]
-      if edge[2] in vert_set[i]:
-        vert_2 = i
-        edge_b = edge[2]
+    edge1 = edge[1]
+    edge2 = edge[2]
 
-    if vert_1 != vert_2:
-      vert_set[vert_1] = vert_set[vert_1].union(vert_set[vert_2])
-      vert_set.pop(vert_2)
-      tree_set.append(edge)
-      print(vert_set)
+    if tree_set == []:
+      tree_set.append({edge1, edge2})
+      chosen_edges.append(edge)
+    else: 
+      index1 = -1
+      index2 = -1
+
+
+
+    
 
 
 
