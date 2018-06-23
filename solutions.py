@@ -173,7 +173,11 @@ print(question2(string))
 
 Question 3
 
-G = {'A': [('B', 7), ('D', 5)], 'B': [('A', 7), ('C', 8), ('D', 9), ('E', 7)],'C': [('B', 8), ('E', 5)],'D': [('A', 5), ('B', 9), ('E', 15), ('F', 6)],'E': [('B', 7), ('C', 5), ('D', 15), ('F', 8), ('G', 9)],'F': [('D', 6), ('E', 8), ('G', 11)],'G': [('E', 9), ('F', 11)]}
+
+    for i in range(len(vert_set)):
+      if edge[1] in vert_set[i]:
+        vert_1 = 1G = {'A': [('B', 7), ('D', 5)], 'B': [('A', 7), ('C', 8), ('D', 9), ('E', 7)],'C': [('B', 8), ('E', 5)],'D': [('A', 5), ('B', 9), ('E', 15), ('F', 6)],'E': [('B', 7), ('C', 5), ('D', 15), ('F', 8), ('G', 9)],'F': [('D', 6), ('E', 8), ('G', 11)],'G': [('E', 9), ('F', 11)]}
+
 
 def question3(g):
 
@@ -183,10 +187,9 @@ def question3(g):
   tree_set = []
   
   for x in graph:
-    vert_set.append(x)
+    vert_set.append(set(x))
 
-  for v in vert_list:
-    vert_set.append(set(v))
+  
 
   for key, vertex in graph.items():
     for each in vertex:
@@ -198,8 +201,9 @@ def question3(g):
   sorted_e = sorted(edges)
   for edge in sorted_e:
     for i in range(len(vert_set)):
+      
       if edge[1] in vert_set[i]:
-        vert_1 = 1
+        vert_1 = i
         edge_a = edge[1]
       if edge[2] in vert_set[i]:
         vert_2 = i
@@ -210,7 +214,8 @@ def question3(g):
       vert_set.pop(vert_2)
       tree_set.append(edge)
       print(vert_set)
-      
+
+
 
 
 
