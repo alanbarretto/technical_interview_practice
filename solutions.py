@@ -215,6 +215,15 @@ def question3(g):
       index1 = -1
       index2 = -1
 
+      for index in range(len(tree_set)):
+        if edge1 in tree_set[index]:
+          index1 = index
+
+        if edge2 in tree_set[index]:
+          index2 = index
+
+      
+
 
 
     
