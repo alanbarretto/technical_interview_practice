@@ -178,9 +178,12 @@ G = {'A': [('B', 7), ('D', 5)], 'B': [('A', 7), ('C', 8), ('D', 9), ('E', 7)],'C
 def question3(g):
 
   graph = g
-  vert_list = graph.keys()
-  edges = set()
   vert_set = []
+  edges = set()
+  tree_set = []
+  
+  for x in graph:
+    vert_set.append(x)
 
   for v in vert_list:
     vert_set.append(set(v))
