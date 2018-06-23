@@ -174,11 +174,6 @@ print(question2(string))
 Question 3
 
 
-    for i in range(len(vert_set)):
-      if edge[1] in vert_set[i]:
-        vert_1 = 1G = {'A': [('B', 7), ('D', 5)], 'B': [('A', 7), ('C', 8), ('D', 9), ('E', 7)],'C': [('B', 8), ('E', 5)],'D': [('A', 5), ('B', 9), ('E', 15), ('F', 6)],'E': [('B', 7), ('C', 5), ('D', 15), ('F', 8), ('G', 9)],'F': [('D', 6), ('E', 8), ('G', 11)],'G': [('E', 9), ('F', 11)]}
-
-
 def question3(g):
 
   graph = g
