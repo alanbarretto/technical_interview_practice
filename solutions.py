@@ -180,6 +180,8 @@ def question3(g):
   vert_set = []
   edges = set()
   tree_set = []
+  chosen_edges = []
+  final_output = {}
   
   for x in graph:
     vert_set.append(set(x))
