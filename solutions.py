@@ -59,7 +59,7 @@ def question1(s, t):
     #Check if the letter count is the same for all letters in t as in s. O(n)
 
     for letter_t in t_set:
-    	if letter_tally_t[letter_t] != letter_tally_s[letter_t]:
+    	if letter_tally_t[letter_t] > letter_tally_s[letter_t]:
     		return False
 
     #If every letter in t_string is in s_tring and each letter has a count equal to its corresponding letter in s_set, return True
