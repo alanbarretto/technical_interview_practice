@@ -302,19 +302,16 @@ class BST(object):
 def unzip(matrix, node):
     temp_node = None
     for y in range(len(matrix[node.value])):
-      print('y is ', y)
-      print('we are in node ', node.value )
+      
       if matrix[node.value][y] == 1 and y < node.value:
         temp_node = Node(y)
         node.left = temp_node
-        print('new node ', temp_node.value)
-        unzip(matrix, Node(node.left.value))
+        unzip(matrix, node.left))
         
       if matrix[node.value][y] == 1 and y > node.value:
         temp_node = Node(y)
         node.right = temp_node
-        print('node right ', node.right.value)
-        unzip(matrix, Node(node.right.value))
+        unzip(matrix, node.right))
         
 def find_ancestor(vertex, smaller, larger):
   if smaller <= vertex.value and larger >= vertex.value:
