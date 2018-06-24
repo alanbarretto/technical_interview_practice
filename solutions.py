@@ -306,12 +306,12 @@ def unzip(matrix, node):
       if matrix[node.value][y] == 1 and y < node.value:
         temp_node = Node(y)
         node.left = temp_node
-        unzip(matrix, node.left))
+        unzip(matrix, node.left)
         
       if matrix[node.value][y] == 1 and y > node.value:
         temp_node = Node(y)
         node.right = temp_node
-        unzip(matrix, node.right))
+        unzip(matrix, node.right)
         
 def find_ancestor(vertex, smaller, larger):
   if smaller <= vertex.value and larger >= vertex.value:
