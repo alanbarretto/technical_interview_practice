@@ -264,13 +264,104 @@ def question3(g):
     return final_output
 
 
+Question 4
+
+m = [[0, 0, 0, 0, 0, 0, 0],
+     [0, 0, 0, 0, 0, 0, 0],
+     [0, 1, 0, 1, 0, 0, 0],
+     [0, 0, 0, 0, 0, 0, 0],
+     [0, 0, 0, 0, 0, 0, 0],
+     [0, 0, 1, 0, 0, 0, 1],
+     [0, 0, 0, 0, 0, 0, 0]]
+
+class Node(object):
+    def __init__(self, value):
+        self.value = value
+        self.left = None
+        self.right = None
+
+class BST(object):
+    def __init__(self, root):
+        self.root = Node(root)
+
+    def insert(self, new_val):
+        self.insert_helper(self.root, new_val)
+
+    def insert_helper(self, current, new_val):
+        if current.value < new_val:
+            if current.right:
+                self.insert_helper(current.right, new_val)
+            else:
+                current.right = Node(new_val)
+        else:
+            if current.left:
+                self.insert_helper(current.left, new_val)
+            else:
+                current.left = Node(new_val)
+
+def unzip(matrix, node):
+    temp_node = None
+    for y in range(len(matrix[node.value])):
+      print('y is ', y)
+      print('we are in node ', node.value )
+      if matrix[node.value][y] == 1 and y < node.value:
+        temp_node = Node(y)
+        node.left = temp_node
+        print('new node ', temp_node.value)
+        unzip(matrix, Node(node.left.value))
+        
+      if matrix[node.value][y] == 1 and y > node.value:
+        temp_node = Node(y)
+        node.right = temp_node
+        print('node right ', node.right.value)
+        unzip(matrix, Node(node.right.value))
+        
+        
+      
 
 
+def question4(T, r, n1, n2):
 
+  if type(T) != list:
+    return "TypeError: Matrix is not of type List!"
+  
+  if type(r) != int:
+    return "TypeError: r is not an integer!"
+  if type(n1) != int:
+    return "TypeError: n1 is not an integer!"
+  if type(n2) != int:
+    return "TypeError: n2 is not an integer!"
+
+  n = Node(r)
+
+  unzip(T, n)
+
+  
+  
+  current = n
+  small = min(n1, n2)
+  big = max(n1, n2)
+  
+  condition = False
+
+  while condition:
     
+    if small < current.value and big < current.value:
+      current = current.left
+      print(current.value)
+    elif small > current.value and big > current.value:
+      current = current.right
+    elif small < current.value and big > current.value:
+      current = current.value
+      condition = True
+
+  return current.value
+      
 
 
+  
 
+print(question4(m, 5, 1, 3))
 
 
 Question 5
