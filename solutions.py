@@ -348,20 +348,11 @@ def question4(T, r, n1, n2):
   small = min(n1, n2)
   big = max(n1, n2)
   
-  condition = False
+ 
 
-  while condition:
-    
-    if small < current.value and big < current.value:
-      current = current.left
-      print(current.value)
-    elif small > current.value and big > current.value:
-      current = current.right
-    elif small < current.value and big > current.value:
-      current = current.value
-      condition = True
+  
 
-  return current.value
+  return 
       
 
 
