@@ -348,16 +348,18 @@ def question4(T, r, n1, n2):
   small = min(n1, n2)
   big = max(n1, n2)
   
- 
+  winner = find_ancestor(current, small, big)
+
+  return winner
 
   
 
-  return 
+
       
 
 
   
-
+#should return 2
 print(question4(m, 5, 1, 3))
 
 
