@@ -316,6 +316,15 @@ def unzip(matrix, node):
         print('node right ', node.right.value)
         unzip(matrix, Node(node.right.value))
         
+def find_ancestor(vertex, smaller, larger):
+  if smaller <= vertex.value and larger >= vertex.value:
+    return vertex.value
+  elif smaller < vertex.value and larger < vertex.value:
+    print('smaller is ', smaller, 'vertex ', vertex.value, 'larger ', larger)
+    return find_ancestor(vertex.left, smaller, larger)
+  elif smaller > vertex.value and larger > vertex.value:
+    print('smaller is ', smaller, 'vertex ', vertex.value, 'larger ', larger)
+    return find_ancestor(vertex.right, smaller, larger)
         
       
 
