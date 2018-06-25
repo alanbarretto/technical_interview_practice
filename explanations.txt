@@ -1,0 +1,193 @@
+Question 1
+
+Given two strings s and t, determine whether some anagram of t is a substring of s. For example: if s = "udacity" and t = "ad", then the function returns True. Your function definition should look like: question1(s, t) and return a boolean True or False.
+
+Clarifying the Question:
+
+	My first question is if the string being input will be an English word that can be found in the dictionary, or can it be a string with letters, numbers, ASCII characters, and spaces that the function will need to sort through?  I will assume that it can be anything as long as the data type is a string.  My function will have to check for any character in string type.
+
+	Will there be spaces?  I think spaces are ok because the anagrams are usually created using letters, not spaces.  I prefer to remove the spaces so that we won't have to include them in our tally of characters in the end.
+
+	Does capitalization matter?  If it does, then capital A is different than small letter a, and would affect the creation of an anagram.  If capitalization does not matter as it usually wouldn't in an anagram, all inputs will be converted to small letters. 
+
+Confirming Inputs and Outputs:
+
+	s is a string
+	t is a string
+	Output should be a boolean (True or False).  If t is a string of letters made from the letters found in s, and each letter in t is used the same number of times it is found in s, then return True.  Otherwise, False
+
+Brainstorm:
+	
+	After checking if s and t are valid, I put each letter into sets to make it easier to check for membership.  Because we have to iterate through each letter in the string, efficiency would be O(n).  Using sets would be best in this case because there could be a lot of duplicate letters from string s, and I only want to know if a letter in string t is found in s.
+
+	A letter from string t should not be used more times than it appears in string s. I used a dictionary to tally the letters in each string so that the letter would be the key and the number of times it appears is the value.  This makes it easier to compare values from each dictionary. 
+
+Test Cases:
+
+	Edge case: Really long string with letters appearing many times.
+	Edge case: Non-letter characters
+	Edge case: non-string inputs, like integers
+	Edge case: string t longer than string s
+	Edge case: letters in string t appearing more times than in string s
+
+	
+
+
+Runtime Analysis:
+	
+	Removing spaces and converting string to lower case takes O(n).  I iterated through each string once and a set once, each taking O(n) time.  All in all, the function takes O(n).  
+
+Question 2
+
+Given a string a, find the longest palindromic substring contained in a. Your function definition should look like question2(a), and return a string.
+
+
+Clarifying the Question:
+
+	If we find two palindromes of the same lenth, which one should we return? 
+	What is the least number of characters to be considered a palindrome?  If we have only one character or an empty string, can that be considered?  
+
+	Here, I would not consider empty strings and one character strings as palindromes because you cannot reverse any of these inputs.  You have to be able to go forward and backward on something, and that's just not possible with these.  Besides, there's no challenge.  So, the least amount of characters to be considered here would be two. 
+
+Confirming Inputs and Outputs:
+	
+	Input: a string that is a palindrome iteslf or contains one or several palindromes in it.  
+
+	Output: a string which is the longest palindrom that can be found from the input string.  If no palindrome is found, the function will return a string "No palindromes found." or something to that effect.
+
+Brainstorm:
+	
+	The main thing I wanted to do when I iterate through the string is to check if the letter before the index I'm checking and after it are the same letter.  This means I have found a 3 letter palindrome like "ana".  In order to check for the letter before an index at the start of my iteration, I needed to start at index 1. I continue down the string if index 0 and 2 are not the same. 
+
+	I created 2 helper functions to be used once a 3 letter palindrome or 2 repeating letters are found.  Recursive functions are super helpful here because they can keep checking without leaving the place where the loop stops in the string.  Once the recursive function ends, the loop continues on.
+
+Test Cases:
+	Edge case: A string with no palindromes, like "abcdefg"
+	Edge case: A string with one character (length = 1)
+	Edge case: An integer
+	Edge case: A string with 2 palindromes
+
+
+
+Runtime Analysis:
+	Iterating through the string is O(n). 
+
+
+Question 3
+
+Given an undirected graph G, find the minimum spanning tree within G. A minimum spanning tree connects all vertices in a graph with the smallest possible total weight of edges. Your function should take in and return an adjacency list structured like this:
+{'A': [('B', 2)],
+ 'B': [('A', 2), ('C', 5)], 
+ 'C': [('B', 5)]}
+
+
+Vertices are represented as unique strings. The function definition should be question3(G)
+
+
+Clarifying the Question:
+	Are the edges always going to be (letter, integer) or can it be (integer, letter)?
+	Can we assume that all the vertices are connected and there are no disconnected vertices?
+	
+
+Confirming Inputs and Outputs:
+
+	Input: A dictionary which is the adjacency list representing a graph
+	Output: A dictionary which is the adjacency list representing the minimum spanning tree.
+
+Brainstorm:
+	This was a tough problem to solve.  I started by using Kruskal’s algorithm which I learned from Geeks for Geeks (https://www.geeksforgeeks.org/greedy-algorithms-set-2-kruskals-minimum-spanning-tree-mst/).  I needed to sort the edges in descending order first.  That was the easy part.  The hard part was figuring out how to not choose an edge that creates a cycle.  As the function iterates through the sorted edges list, I tried to place each edge in an empty list but I kept running into problems with the unwanted edges.  I thought about sets and unions and how this could work in this case. It took me a long time to figure it out but eventually, I assigned -1 to two variables: index1 and index2.  When the vertex is not found in the list, the index will remain -1 and the vertex will be added to the set in the list via union.  If it is found in there, the index will be set to its corresponding index and will not be unioned.  
+
+Test Cases:
+	
+	Edge case: A graph where all vertex are connected (no loose edges).
+	Edge case: An dictionary with no values.
+	Edge case: A linked list.
+
+Runtime Analysis:
+
+	I needed to iterate through every item in tree_set for every edge in sorted_e list in order to determine if the edge will be unioned to the tree or be passed over.  This takes O(n**2).  There's another nested loop for the purpose of creating the sorted edges list, which takes O(n**2) also.   
+
+Question 4
+
+Find the least common ancestor between two nodes on a binary search tree. The least common ancestor is the farthest node from the root that is an ancestor of both nodes. For example, the root is a common ancestor of all nodes on the tree, but if both nodes are descendents of the root's left child, then that left child might be the lowest common ancestor. You can assume that both nodes are in the tree, and the tree itself adheres to all BST properties. The function definition should look like question4(T, r, n1, n2), where T is the tree represented as a matrix, where the index of the list is equal to the integer stored in that node and a 1 represents a child node, r is a non-negative integer representing the root, and n1 and n2 are non-negative integers representing the two nodes in no particular order. For example, one test case might be
+question4([[0, 1, 0, 0, 0],
+           [0, 0, 0, 0, 0],
+           [0, 0, 0, 0, 0],
+           [1, 0, 0, 0, 1],
+           [0, 0, 0, 0, 0]],
+          3,
+          1,
+          4)
+
+
+and the answer would be 3.
+
+
+Clarifying the Question:
+	What if there's only one node?
+
+
+Confirming Inputs and Outputs:
+	Input: 
+
+	- A 2d list.  The outer index represents the value of each node.  The inner indices represent the which node it is connected to when it is pointing to the value of 1 instead of zero. 
+	- An integer representing the value of the root vertex.
+	- An ineger representing the value of a vertex in the tree.
+	- Another integer representing another vertex in the tree.
+
+	Output: An integer representing the least common ancestor of both integers given in the input.
+
+Brainstorm:
+	The hardest part for me here was how to assign the nodes based on the adjacency matrix given.  I wanted to create a helper function in order to do this.  I named it 'unzip' and made it a recursive function.  At first, it wasn't recursive, but simply a nested loop.  But it wasn't working too well.  When I made it recursive, the problem I encountered was how to initiate a new node and assign it to either node.left or node.right, then send that node into another round of the recursive function.  It seemed that calling Node(x) twice creates two different objects with the same value, so that was not good.  Eventually, I figured out that I only needed to assign the initialized node into a variable, then assign that variable to node.left or node.right, then also send that variable into the recursive function again.  
+	I discovered that finding the ancestor of two nodes can be recursive as well.  If both nodes are less than the current node we are looking at, we take one step down to the left.  If both are greater, we go to the right. These steps are repeated till one node is less and the other is greater than the current node.  Thus, recursive. 
+	Since we don't know which is smaller or larger between n1 and n2, I thought using min() and max() was clever.  
+
+Test Cases:
+	Edge case: A tree with one node.
+	Edge case: A tree with two nodes.
+	Edge case: An unbalanced tree with nodes only going to the right (or left).
+
+
+Runtime Analysis:
+	The unzip function loops through the matrix every time the function is called recursively.  That is m*O(n), or O(n).
+
+
+Question 5
+
+Find the element in a singly linked list that's m elements from the end. For example, if a linked list has 5 elements, the 3rd element from the end is the 3rd element. The function definition should look like question5(ll, m), where ll is the first node of a linked list and m is the "mth number from the end". You should copy/paste the Node class below to use as a representation of a node in the linked list. Return the value of the node at that position.
+class Node(object):
+  def __init__(self, data):
+    self.data = data
+    self.next = None
+
+
+Clarifying the Question:
+	- Is the last element in the list the first element from the end? Therefore, m always has to be greater than zero?
+	- If there is only one element, is that considered a linked list or should there be more than one element?
+
+
+
+Confirming Inputs and Outputs:
+	Inputs:
+	- ll is a linked list that is already initialized and with a head.
+	- m is an integer that represents the position of the element from the end of the linked list.
+
+	Output:
+	- An integer which represents the value of the node that is mth position from the end. Otherwise, return None.
+
+
+Brainstorm:
+	I tried to do the greedy approach and traverse the list only once, but it wasn't sufficient.  I needed to traverse the list one time to get the total number of elements, then traverse it again a second time to get to the position we want to return.  
+	I was able to calculate the position of the element from the start by subtracting m from the total number of positions, then adding 1.  (ex. if there are 9 elements and we are looking for the 3rd position from the end, 9-3 = 6. then 6+1=7.  return element in position 7)
+	This is why a second traversal is needed.  Once position 7 is determined (from the example above), traverse from the start of the list and stop at 7. 
+
+
+
+Test Cases:
+	Edge case: A linked list with no head and no nodes.
+	Edge case: A linked list with only one node.
+	Sample case: A list of 5 elements. m = 3 (Should return 3rd element from head)
+
+
+Runtime Analysis:
+	The two while loops take O(n) each, so the total is O(n).
