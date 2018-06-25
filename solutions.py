@@ -370,22 +370,32 @@ x = [[0]]
 print(question4(x, 0, 0, 0))
 
 #Edge case: A tree with two nodes.
+z = [[0,1],[1,0]]
+#Should return the root
+print(question4(z, 1, 0, 1))
 
 Question 5
 
+#Node object Constructor from Udacity lessons
 class Node(object):
     def __init__(self, value):
         self.value = value
         self.next = None
 
+#LinkedList constructor from Udacity lessons
 class LinkedList(object):
     def __init__(self, head=None):
         self.head = head
+
+    def append(self, new_element):
+        current = self.head
+        if self.head:
+            while current.next:
+                current = current.next
+            current.next = new_element
+        else:
+            self.head = new_element
     
-    
-
-
-
 
 def question5(ll, m):
     #Check if ll has a head
