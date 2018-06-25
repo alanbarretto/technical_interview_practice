@@ -1,9 +1,3 @@
-"""Given two strings s and t, determine whether some anagram of t is a substring of s. For example: if s = "udacity" and t = "ad", then the function returns True. Your function definition should look like: question1(s, t) and return a boolean True or False.
-"""
-
-
-
-
 
 def question1(s, t):
 
@@ -55,29 +49,33 @@ def question1(s, t):
     #If every letter in t_string is in s_tring and each letter has a count equal to its corresponding letter in s_set, return True
     return True
 
+#Test Cases:
 #Should return True
 print(question1("udacity", "ad"))
 print(question1("abc123", "321cba"))
 print(question1("4321", "1234"))
 print(question1("abcdabcdabcdabcd", "aaaabbbbccccdddd"))
+#Edge case: really long string
 print(question1("asdgawregasdgasdasdgasbadsfas", "dawreg"))
+#Edge case: non letter characters
 print(question1("!@#$%^&*() ~", "$%^&"))
 print(question1("hello world", "dellrow"))
 
 #Should return False
-
+#Edge case: string t longer than string s
 print(question1("ad", "udacity"))
 print(question1("", ""))
 print(question1(" ", "hello"))
+#Edge case: non string inputs
 print(question1(12345, "12345"))
+#Edge case: non string inputs
 print(question1("12345", 12345))
 print(question1(None, "hello"))
+#Edge case: letters in string t appearing more times than in string s
 print(question1("abc", "aaabbbccc"))
 
+
 Question 2
-
-
-
 
 def question2(s):
   
@@ -153,7 +151,7 @@ def consecutive(stng, b, st):
     return consecutive(stng, b, st+1)
  
 #Teest Cases:
-
+#Edge case: A string with 2 palindromes
 #Should return "hhhnursesrunhhh"
 string1 = "dcknseshhhhnursesrunhhhrun..xxxxxx"
 print(question2(string1))
@@ -161,7 +159,7 @@ print(question2(string1))
 #should return "nursesrun"
 string2 = "aaajslsownursesruncox"
 print(question2(string2))
-
+#Edge case: A string with no palindromes, like "abcdefg"
 #Should return "There are no palindromes found."
 string3 = "abcdefghijklmnop"
 print(question2(string3))
@@ -169,22 +167,14 @@ print(question2(string3))
 #Should return "Input is either None or not type: str.""
 string4 = ""
 print(question2(string4))
-
+#Edge case: An integer
 #Input is either None or not type: str.
 string5 = 12345
 print(question2(string5))
-
+#Edge case: A string with one character (length = 1)
 #Length of string is less than 2.
 string6 = "g"
 print(question2(string6))
-
-
-
-
-
-
-
-
 
 
 Question 3
@@ -253,7 +243,6 @@ def question3(g):
 
             elif index2 == -1 and index1 >= 0:
                 holding_cell.append({edge2})
-                tree_set[index1] = tree_set
                 tree_set[index1] = tree_set[index1].union(holding_cell[0])
                 holding_cell.pop(0)
                 index1 = -1
@@ -279,6 +268,10 @@ def question3(g):
 
     return final_output
 
+#Test case:
+a = {'A': [('B', 1),('E', 12),('F',15),('G',13),('H',14)], 'B': [('A',1),('C',11),('D',16),('F',3),('I',5)], 'C': [('B',11),('D',6),('E',10),('J',4)], 'D': [('C',6),('B',16)], 'E': [('A',12),('C',10),('G',2),('J',8)], 'F': [('A',15),('B',3),('H',7),('I',9)], 'G': [('A',13),('E',2)], 'H': [('A',14),('F',7)], 'I': [('B',5),('F',9)], 'J': [('C',4),('E',8)]}
+#Should return 
+print(question3(a))
 
 Question 4
 
@@ -382,19 +375,21 @@ class LinkedList(object):
 
 
 def question5(ll, m):
-
+    #Check if ll has a head
     if not ll.head:
       return None
-
+    #
     if m == 0:
       return None
 
+    #Increment counter as the while loop traverses the linked list. Counter will equal the position of the last element.
     counter = 1
     current = ll.head
     while current.next:
         current = current.next
         counter += 1
-       
+    
+    #Calculate the actual position we want to get. winner is the position of the element we are looking for. 
     temp = counter - m
     winner = temp +1
     if counter == winner:
@@ -402,6 +397,7 @@ def question5(ll, m):
     elif m > counter:
        return None
 
+    #Traverser the list again and stop at the mth position from the end
     new_counter = 1
     new_counter = ll.head
     while new_current.next:
