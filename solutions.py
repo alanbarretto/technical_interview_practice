@@ -181,82 +181,86 @@ Question 3
 
 
 def question3(g):
-
+    #Initialize sets and lists
     graph = g
     vert_set = []
     edges = set()
     tree_set = []
     chosen_edges = []
     final_output = {}
-
+    #Test if graph is type dict
     if type(graph) != dict:
         return "Input must be a dictionary"
-
+    #Length of graph must be at least 2
     if len(graph) < 2:
         return "There are not enough nodes to form a tree"
-  
+    #Append keys in a list as sets
     for x in graph:
         vert_set.append(set(x))
 
-  
-
+    #Iterate through the graph to add each edge to set
     for key, vertex in graph.items():
+        if not key:
+          return "Error: Key is missing!"
+        if not vertex:
+          return "Error: Edges are missing!"
         for each in vertex:
             if key > each[0]:
                 edges.add((each[1], each[0], key))
         else:
             edges.add((each[1], key, each[0]))
-  
+    #sort the edges in descending order
     sorted_e = sorted(edges)
-
+    #Iterate through each edge
     holding_cell = []
     for edge in sorted_e:
         edge1 = edge[1]
         edge2 = edge[2]
-
+        #If tree_set is empty, append the first chosen edge
         if tree_set == []:
             tree_set.append({edge1, edge2})
             chosen_edges.append(edge)
         else: 
             index1 = -1
             index2 = -1
+            #If edge1 or edge2 are in tree_set, change the index values
+            for index in range(len(tree_set)):
+                if edge1 in tree_set[index]:
+                    index1 = index
 
-        for index in range(len(tree_set)):
-            if edge1 in tree_set[index]:
-                index1 = index
+                if edge2 in tree_set[index]:
+                    index2 = index
+        #If index1 or index2 are -1, do not append edge. If they are >0, append
+        if index1 == -1 and index2 == -1:
+            tree_set.append({edge1, edge2})
+            chosen_edges.append(edge)
 
-            if edge2 in tree_set[index]:
-                index2 = index
+        elif (index1 == index2) and (index1 > 0 and index2 > 0):
+            index1 = -1
+            index2 = -1
 
-            if index1 == -1 and index2 == -1:
-                tree_set.append({edge1, edge2})
-                chosen_edges.append(edge)
-            elif (index1 == index2) and (index1 > 0 and index2 > 0):
-                index1 = -1
-                index2 = -1
-            elif index1 == -1 and index2 > 0:
-                holding_cell.append({edge1})
-                tree_set[index2] = tree_set[index2].union(tree_set[holding_cell[0]])
-                holding_cell.pop(0)
-                index2 = -1
-                chosen_edges.append(edge)
+        elif index1 == -1 and index2 > 0:
+            holding_cell.append({edge1})
+            tree_set[index2] = tree_set[index2].union(tree_set[holding_cell[0]])
+            holding_cell.pop(0)
+            index2 = -1
+            chosen_edges.append(edge)
 
-            elif index2 == -1 and index1 >= 0:
-                holding_cell.append({edge2})
-                tree_set[index1] = tree_set[index1].union(holding_cell[0])
-                holding_cell.pop(0)
-                index1 = -1
-                chosen_edges.append(edge)
+        elif index2 == -1 and index1 >= 0:
+            holding_cell.append({edge2})
+            tree_set[index1] = tree_set[index1].union(holding_cell[0])
+            holding_cell.pop(0)
+            index1 = -1
+            chosen_edges.append(edge)
+    
+        elif (index1 != -1 and index2 != -1) and (index1 != index2):
+            tree_set[index1] = tree_set[index1].union(tree_set[index2])
+            tree_set.pop(index2)
+            index1 = -1
+            index2 = -1
+            chosen_edges.append(edge)
         
-
-            elif (index1 != -1 and index2 != -1) and (index1 != index2):
-                tree_set[index1] = tree_set[index1].union(tree_set[index2])
-                tree_set.pop(index2)
-                index1 = -1
-                index2 = -1
-                chosen_edges.append(edge)
-        
-
+    #Pull the values from chosen_edges to put together the dictionary as final_output
     for chosen in chosen_edges:
         value = chosen[0]
         key = chosen[1]
@@ -269,11 +273,85 @@ def question3(g):
     return final_output
 
 #Test case:
+#Edge case: A graph where all vertex are connected (no loose edges).
 a = {'A': [('B', 1),('E', 12),('F',15),('G',13),('H',14)], 'B': [('A',1),('C',11),('D',16),('F',3),('I',5)], 'C': [('B',11),('D',6),('E',10),('J',4)], 'D': [('C',6),('B',16)], 'E': [('A',12),('C',10),('G',2),('J',8)], 'F': [('A',15),('B',3),('H',7),('I',9)], 'G': [('A',13),('E',2)], 'H': [('A',14),('F',7)], 'I': [('B',5),('F',9)], 'J': [('C',4),('E',8)]}
-#Should return 
+#Should return {'A': [(1, 'B')], 'E': [(2, 'G'), (8, 'J')], 'B': [(3, 'F'), (5, 'I'), (11, 'C')], 'C': [(4, 'J'), (6, 'D')], 'F': [(7, 'H')]}
 print(question3(a))
 
+#Edge case: A tree where each node has only 1 child each.
+b = {'A': [('B',3)], 'B':[('C',4)], 'C': [('D',1)], 'D':[('E',2)], 'E':[('D',2)]}
+#Should return {'C': [(1, 'D')], 'D': [(2, 'E')], 'A': [(3, 'B')], 'B': [(4, 'C')]}
+print(question3(b))
+
+
 Question 4
+
+
+#Node object constructor from Udacity Lessons
+class Node(object):
+    def __init__(self, value):
+        self.value = value
+        self.left = None
+        self.right = None
+
+    
+#Recursive function that iterates through the adjacency matrix and initializes the Nodes
+def unzip(matrix, node):
+    temp_node = None
+    for y in range(len(matrix[node.value])):
+      
+        if matrix[node.value][y] == 1 and y < node.value:
+            temp_node = Node(y)
+            node.left = temp_node
+            unzip(matrix, node.left)
+          
+        if matrix[node.value][y] == 1 and y > node.value:
+            temp_node = Node(y)
+            node.right = temp_node
+            unzip(matrix, node.right)
+
+#Recursive function that finds the ancestor of two nodes in a BST
+def find_ancestor(vertex, smaller, larger):
+    if smaller <= vertex.value and larger >= vertex.value:
+        return vertex.value
+
+    elif smaller < vertex.value and larger < vertex.value:
+        return find_ancestor(vertex.left, smaller, larger)
+
+    elif smaller > vertex.value and larger > vertex.value:
+        return find_ancestor(vertex.right, smaller, larger)
+        
+
+def question4(T, r, n1, n2):
+    #Check for valid inputs
+    if type(T) != list:
+        return "TypeError: Matrix is not of type List!"
+    if type(r) != int:
+        return "TypeError: r is not an integer!"
+    if type(n1) != int:
+        return "TypeError: n1 is not an integer!"
+    if type(n2) != int:
+        return "TypeError: n2 is not an integer!"
+    if len(T) == 2:
+      return r
+    #Initialize the root node
+    n = Node(r)
+    #Initialize all the other nodes in the matrix
+    unzip(T, n)
+
+    #Find the min and max between n1 and n2
+    current = n
+    small = min(n1, n2)
+    big = max(n1, n2)
+    #Use find_ancestor function to return the ancestor 
+    winner = find_ancestor(current, small, big)
+
+    return winner
+
+  
+
+
+#Test Cases:
 
 m = [[0, 0, 0, 0, 0, 0, 0],
      [0, 0, 0, 0, 0, 0, 0],
@@ -282,81 +360,16 @@ m = [[0, 0, 0, 0, 0, 0, 0],
      [0, 0, 0, 0, 0, 0, 0],
      [0, 0, 1, 0, 0, 0, 1],
      [0, 0, 0, 0, 0, 0, 0]]
-
-class Node(object):
-    def __init__(self, value):
-        self.value = value
-        self.left = None
-        self.right = None
-
-class BST(object):
-    def __init__(self, root):
-        self.root = Node(root)
-    
-
-def unzip(matrix, node):
-    temp_node = None
-    for y in range(len(matrix[node.value])):
-      
-      if matrix[node.value][y] == 1 and y < node.value:
-        temp_node = Node(y)
-        node.left = temp_node
-        unzip(matrix, node.left)
-        
-      if matrix[node.value][y] == 1 and y > node.value:
-        temp_node = Node(y)
-        node.right = temp_node
-        unzip(matrix, node.right)
-        
-def find_ancestor(vertex, smaller, larger):
-  if smaller <= vertex.value and larger >= vertex.value:
-    return vertex.value
-
-  elif smaller < vertex.value and larger < vertex.value:
-    return find_ancestor(vertex.left, smaller, larger)
-
-  elif smaller > vertex.value and larger > vertex.value:
-    return find_ancestor(vertex.right, smaller, larger)
-        
-      
-
-
-def question4(T, r, n1, n2):
-
-  if type(T) != list:
-    return "TypeError: Matrix is not of type List!"
-  
-  if type(r) != int:
-    return "TypeError: r is not an integer!"
-  if type(n1) != int:
-    return "TypeError: n1 is not an integer!"
-  if type(n2) != int:
-    return "TypeError: n2 is not an integer!"
-
-  n = Node(r)
-
-  unzip(T, n)
-
-  
-  
-  current = n
-  small = min(n1, n2)
-  big = max(n1, n2)
-  
-  winner = find_ancestor(current, small, big)
-
-  return winner
-
-  
-
-
-      
-
-
   
 #should return 2
 print(question4(m, 5, 1, 3))
 
+#Edge case: A tree with one node.
+x = [[0]]
+#Should return 0
+print(question4(x, 0, 0, 0))
+
+#Edge case: A tree with two nodes.
 
 Question 5
 
