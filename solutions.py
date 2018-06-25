@@ -34,33 +34,23 @@ def question1(s, t):
     s_list = list(s_string)
     t_list = list(t_string)
 
-    #Put the contents of the list into the corresponding sets
-    for x in s_list:
-    	s_set.add(x)
+    #Put the contents of the list into the corresponding sets. At the same time, tally all the letters
+    for x in range(len(s_string)):
+        s_set.add(s_string[x])
+        count_s = s.count(s_string[x])
+        letter_tally_s[s_string[x]] = count_s
 
-    for y in t_list:
-    	t_set.add(y)
+    for y in range(len(t_string)):
+        t_set.add(t_string[y])
+        count_t = t.count(t_string[y])
+        letter_tally_t[t_string[y]] = count_t
 
-    #Check if all characters in t are present in s, otherwise return False. O(n)
+    #Check if all characters in t are present in s, otherwise return False. O(n).Check if the letter count is the same for all letters in t as in s. O(n)
     for letter in t_set:
     	if letter not in s_set:
     		return False
-
-    #Tally all letters from each set. O(n**2)
-
-    for letter_t in t_string:
-    	count_t = t.count(letter_t)
-    	letter_tally_t[letter_t] = count_t
-
-    for letter_s in s_string:
-    	count_s = s.count(letter_s)
-    	letter_tally_s[letter_s] = count_s
-
-    #Check if the letter count is the same for all letters in t as in s. O(n)
-
-    for letter_t in t_set:
-    	if letter_tally_t[letter_t] > letter_tally_s[letter_t]:
-    		return False
+      if letter_tally_t[letter_t] > letter_tally_s[letter_t]:
+        return False
 
     #If every letter in t_string is in s_tring and each letter has a count equal to its corresponding letter in s_set, return True
     return True
@@ -86,7 +76,7 @@ print(question1("abc", "aaabbbccc"))
 
 Question 2
 
-string = "dcknseshhhhnursesrunhhhrun..xxxxxx"
+
 
 
 def question2(s):
@@ -98,20 +88,23 @@ def question2(s):
   before = start - 1
   after = start + 1
 
+  #Check if type is string and is not empty
   if not str1 or type(str1) != str:
-    return False
+    return "Input is either None or not type: str."
 
+  #Check if string is longer than one character
   if len(str1) < 2:
-    return False
-
+    return "Length of string is less than 2."
+  #Check if the input is already a palindrome in itself, making itself the longest palindrome.
   if str1 == str1[::-1]:
     return str1
-
+  #Check if the last 2 letters are the same.  If they are, store them as the longest palindrome for now.
   if str1[len(str1)-2] == str1[len(str1)-1]:
     longest = str1[len(str1)-2:len(str1)]
 
+  #Check the second letter of the string.  Check the letter before it and after it and iterate through the string this way
   for x in range(1, len(str1)-2):
-
+    #If the string starts with repeating letters, use the recursive function to see how long it repeats. then increment to check for other repeating letters in the string.
     if str1[before] == str1[start]:
       consec = consecutive(str1, before, start)
       if len(consec) > len(longest):
@@ -120,12 +113,12 @@ def question2(s):
       before += 1
       after += 1
 
-
+    #Keep incrementing if no palindrome is found.
     elif str1[before] != str1[after]:
       start +=1
       before += 1
       after += 1
-      
+    #If a palindrome of 3 letters is found, use the palindrome recursive function to keep going further out. Store it in variable longest.
     elif str1[before] == str1[after]:
       word = palindrome(str1, before, after)
       start += 1
@@ -133,10 +126,14 @@ def question2(s):
       after += 1
       if len(word) > len(longest):
         longest = word
-  return longest
+
+  if longest == "":
+    return "There are no palindromes found."
+  else:
+    return longest
       
 
-
+#Helper function that compares letters outward from a point in the string
 def palindrome(stng, bef, aft): 
   
   if stng[bef] != stng[aft]:
@@ -146,6 +143,7 @@ def palindrome(stng, bef, aft):
   else:
     return palindrome(stng, bef-1, aft+1)
 
+#Helper function that looks for more repeating letters to the right of two repeating letters
 def consecutive(stng, b, st):
   if st == len(stng)-1:
     return stng[b:st+1]
@@ -154,8 +152,40 @@ def consecutive(stng, b, st):
   else:
     return consecutive(stng, b, st+1)
  
+#Teest Cases:
 
-print(question2(string))
+#Should return "hhhnursesrunhhh"
+string1 = "dcknseshhhhnursesrunhhhrun..xxxxxx"
+print(question2(string1))
+
+#should return "nursesrun"
+string2 = "aaajslsownursesruncox"
+print(question2(string2))
+
+#Should return "There are no palindromes found."
+string3 = "abcdefghijklmnop"
+print(question2(string3))
+
+#Should return "Input is either None or not type: str.""
+string4 = ""
+print(question2(string4))
+
+#Input is either None or not type: str.
+string5 = 12345
+print(question2(string5))
+
+#Length of string is less than 2.
+string6 = "g"
+print(question2(string6))
+
+
+
+
+
+
+
+
+
 
 Question 3
 
