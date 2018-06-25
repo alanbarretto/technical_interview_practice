@@ -422,7 +422,7 @@ def question5(ll, m):
 
     #Traverser the list again and stop at the mth position from the end
     new_counter = 1
-    new_counter = ll.head
+    new_current = ll.head
     while new_current.next:
       if new_counter == winner:
           return new_current.value
@@ -431,6 +431,7 @@ def question5(ll, m):
           new_counter +=1
 
 
+#Test Cases:
 
 node1 = Node('A')
 ll = LinkedList(node1)
@@ -439,7 +440,13 @@ ll.append(Node('C'))
 ll.append(Node('D'))
 ll.append(Node('E'))
 ll.append(Node('F'))
+#Should return 'C'
+print(question5(ll, 4))
 
+#Edge case: If m is greater than the length of the list
+node2 = Node('A')
+ll = LinkedList(node2)
+#Should return None
 print(question5(ll, 4))
 
 
